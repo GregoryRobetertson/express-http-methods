@@ -22,16 +22,21 @@ res.json({message: ' Your message has been received.'})
 })
 
 app.get('/user/:id', (req, res) => {
-    const userID = req.params.id;
-    res.send(`user ID: ${userID}`)
+    const userID = 'John Doe';
+    res.send(`user id: ${userID}`)
+})
+
+app.get('/search', (req, res) => {
+  const {term, sort} = req.query;
+  if(!term || !sort) {
+    return res.status(400).json({error: 'Missing required query parameters'})
+  }
+        res.json ({message: `Searching for: ${term}, sorted by: ${sort}`})
+    
 })
 
 app.use((req, res) => {
     res.status(404).send('404 - Not Found');
-})
-
-app.get('/search', (req, res) => {
-    const {q} = req.query;
 })
 
 app.listen(port, () => {
